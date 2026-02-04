@@ -135,3 +135,19 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# --- auth ----
+AUTH_USER_MODEL = 'nagoyameshi.User'
+
+LOGIN_URL = '/login/'
+
+LOGIN_REDIRECT_URL = '/'
+
+LOGOUT_URL = '/logout/'
+
+LOGOUT_REDIRECT_URL = '/login/'
+# --- auth ----
+
+# 画像関連の設定
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media_local'

@@ -1,3 +1,55 @@
 from django.shortcuts import render
+from django.views.generic import ListView
+from django.views.generic.edit import CreateView, UpdateView
+from django.contrib.auth.views import LoginView
+from django.contrib.auth import get_user_model
+from .forms import UserCreationForm
+from .models import Profile, Restaurant
+from django.shortcuts import get_object_or_404
 
-# Create your views here.
+class TopView(ListView):
+    template_name = "top.html"
+    model = Restaurant
+    
+class SignUpView(CreateView):
+    form_class = UserCreationForm
+    template_name = "login_signup.html"
+    success_url = '/login/'
+
+class Login(LoginView):
+    template_name = "login_signup.html"
+    
+    def form_valid(self, form):
+        form
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        response = super().form_invalid(form)
+        
+class AccountUpdateView(UpdateView):
+    model = get_user_model()
+    template_name = 'pages/account.html'
+    fields = ('username', 'email',)
+    success_url = '/account/'
+ 
+    def get_object(self):
+        # URL変数ではなく、現在のユーザーから直接pkを取得
+        self.kwargs['pk'] = self.request.user.pk
+        return super().get_object()
+ 
+ 
+class ProfileUpdateView(UpdateView):
+    model = Profile
+    template_name = 'pages/profile.html'
+    fields = ('name', 'zipcode', 'prefecture',
+              'city', 'address1', 'address2', 'tel')
+    success_url = '/profile/'
+ 
+    def get_object(self):
+        # URL変数ではなく、現在のユーザーから直接pkを取得
+        self.kwargs['pk'] = self.request.user.pk
+        return super().get_object()
+
+class RestaurantDetailView(ListView):
+    template_name = "restaurant_detail.html"
+    model = Restaurant
