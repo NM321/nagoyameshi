@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "nagoyameshi",
+    # cloudinary
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -151,3 +154,12 @@ LOGOUT_REDIRECT_URL = '/login/'
 # 画像関連の設定
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media_local'
+
+# cloudinary
+MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': env.str('CLOUD_NAME'),
+    'API_KEY': env.str('CLOUDINARY_API_KEY'),
+    'API_SECRET': env.str('CLOUDINARY_API_SECRET')
+}
